@@ -1,0 +1,34 @@
+/*
+
+You can set up a global style here that is commonly used in each stanza.
+
+Example:
+
+h1 {
+  font-size: 24px;
+}
+
+*/
+main {
+  padding: 1rem 2rem;
+}
+
+p.greeting {
+  margin: 0;
+  font-size: 24px;
+  color: var(--greeting-color);
+  text-align: var(--greeting-align);
+}
+
+#resultTable th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+table.dataTable {
+  width: 99%;
+}
+
+.form-check-input {
+  margin-top: 0;
+}
