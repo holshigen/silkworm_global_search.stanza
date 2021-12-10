@@ -1,0 +1,48 @@
+{
+  "@context": {
+    "stanza": "http://togostanza.org/resource/stanza#"
+  },
+  "@id": "silkworm_global_search",
+  "stanza:label": "Silkworm Global Search",
+  "stanza:definition": "",
+  "stanza:type": "Stanza",
+  "stanza:display": "Text",
+  "stanza:provider": "",
+  "stanza:license": "MIT",
+  "stanza:author": "",
+  "stanza:address": "",
+  "stanza:contributor": [],
+  "stanza:created": "2021-09-08",
+  "stanza:updated": "2021-09-08",
+  "stanza:parameter": [
+    {
+      "stanza:key": "keyword",
+      "stanza:type": "string",
+      "stanza:example": "",
+      "stanza:description": "",
+      "stanza:required": false
+    }
+  ],
+  "stanza:menu-placement": "none",
+  "stanza:style": [
+    {
+      "stanza:key": "--greeting-color",
+      "stanza:type": "color",
+      "stanza:default": "#eb7900",
+      "stanza:description": "text color of greeting"
+    },
+    {
+      "stanza:key": "--greeting-align",
+      "stanza:type": "single-choice",
+      "stanza:choice": [
+        "left",
+        "center",
+        "right"
+      ],
+      "stanza:default": "center",
+      "stanza:description": "text align of greeting"
+    }
+  ],
+  "stanza:incomingEvent": [],
+  "stanza:outgoingEvent": []
+}

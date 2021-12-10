@@ -1,0 +1,20 @@
+PREFIX brso: <http://purl.jp/bio/10/brso/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX so: <http://purl.obolibrary.org/obo/so#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX faldo: <http://biohackathon.org/resource/faldo#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX org: <http://www.w3.org/ns/org#>
+
+SELECT
+dct:identifier as ?uri_identifier
+rdfs:label as ?uri_label
+dct:isReferencedBy as ?uri_isReferencedBy
+brso:derived_from as ?uri_derived_from
+FROM <http://iruddat2.nig.ac.jp:8120/silkworm>
+WHERE {
+}
+limit 1

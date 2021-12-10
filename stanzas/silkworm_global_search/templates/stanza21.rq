@@ -1,0 +1,69 @@
+DEFINE sql:select-option "order" 
+PREFIX brso: <http://purl.jp/bio/10/brso/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX bmpo: <http://purl.bioontology.org/ontology/BMPO/>
+
+SELECT DISTINCT
+    ?id
+    (group_concat(distinct ?phenotype;separator = ", ") AS ?phenotype)
+    (group_concat(distinct ?journal ;separator = ",") AS ?journal)
+    (group_concat(distinct ?origin;separator = ", ") AS ?origin)
+FROM <http://localhost:8890/silkworm>
+WHERE {
+    {
+        ?Resource a brso:BiologicalResource ;
+            dcterms:identifier ?id ;
+            bmpo:stage_egg ?StageResource .
+        ?StageResource a brso:BiologicalResourceEgg ;
+            sio:SIO_001279 _:b1 .
+        filter(LANG(?phenotype) = '')
+        OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
+        OPTIONAL {?Resource brso:derived_from ?origin .}
+        OPTIONAL {
+            _:b1 a sio:SIO_010056 ;
+                rdfs:label ?phenotype .
+        }
+    } UNION {
+        ?Resource a brso:BiologicalResource ;
+            dcterms:identifier ?id ;
+            bmpo:stage_larva ?StageResource .
+        ?StageResource a brso:BiologicalResourceLarva ;
+            sio:SIO_001279 _:b2 .
+        filter(LANG(?phenotype) = '')
+        OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
+        OPTIONAL {?Resource brso:derived_from ?origin .}
+        OPTIONAL {
+            _:b2 a sio:SIO_010056 ;
+                rdfs:label ?phenotype .
+        }
+    } UNION {
+        ?Resource a brso:BiologicalResource ;
+            dcterms:identifier ?id ;
+            bmpo:stage_pupa ?StageResource .
+        ?StageResource a brso:BiologicalResourcePupa ;
+            sio:SIO_001279 _:b3 .
+        filter(LANG(?phenotype) = '')
+        OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
+        OPTIONAL {?Resource brso:derived_from ?origin .}
+        OPTIONAL {
+            _:b3 a sio:SIO_010056 ;
+                rdfs:label ?phenotype .
+        }
+    } UNION {
+        ?Resource a brso:BiologicalResource ;
+            dcterms:identifier ?id ;
+            bmpo:stage_adult ?StageResource .
+        ?StageResource a brso:BiologicalResourceAdult ;
+            sio:SIO_001279 _:b4 .
+        filter(LANG(?phenotype) = '')
+        OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
+        OPTIONAL {?Resource brso:derived_from ?origin .}
+        OPTIONAL {
+            _:b4 a sio:SIO_010056 ;
+                rdfs:label ?phenotype .
+        }
+    }
+}
+ORDER BY ?id

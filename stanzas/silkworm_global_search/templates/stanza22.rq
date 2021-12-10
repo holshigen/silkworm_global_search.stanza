@@ -1,0 +1,144 @@
+DEFINE sql:select-option "order"
+PREFIX brso: <http://purl.jp/bio/10/brso/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
+PREFIX bmpo: <http://purl.bioontology.org/ontology/BMPO/>
+
+SELECT DISTINCT
+    ?id
+    (group_concat(distinct ?phenotype_feature;separator = ", ") AS ?phenotype_feature)
+    (group_concat(distinct ?journal ;separator = ",") AS ?journal)
+    (group_concat(distinct ?origin;separator = ", ") AS ?origin)
+FROM <http://localhost:8890/silkworm>
+WHERE {
+
+    # 系統リソース情報
+    ?Resource a brso:BiologicalResource ;
+        dcterms:identifier ?id ;
+        rdfs:label ?strain ;
+        dcterms:description ?description ;
+        ?stage ?StageResource .
+
+    OPTIONAL { ?Resource brso:derived_from ?origin . }
+    OPTIONAL { ?Resource dcterms:isReferencedBy ?journal . }
+    OPTIONAL {
+        ?Resource dcterms:reference ?b_reference .
+        
+        ?b_reference a bibo:Article ;
+            prism:publicationName ?puclication_name .
+
+        OPTIONAL {
+            ?b_reference dc:creater ?author .
+            ?author a foaf:Person;
+                foaf:name ?author_name .
+        }
+    }
+    
+    # ステージ別リソース情報
+    ?StageResource a ?StageResourceClass . 
+    filter(?StageResourceClass = brso:BiologicalResourceEgg 
+        || ?StageResourceClass = brso:BiologicalResourceLarva
+        || ?StageResourceClass = brso:BiologicalResourcePupa
+        || ?StageResourceClass = brso:BiologicalResourceAdult)
+
+    ?StageResource brso:resource_state ?b_resource_state .
+    ?b_resource_state rdfs:label ?resource_state .
+
+    # 遺伝子情報
+    OPTIONAL{
+        ?StageResource brso:genomic_feature ?b_genomic_feature .
+        
+        ?b_genomic_feature a brso:GenomicFeature ;
+            brso:has_genomic_segment ?b_genomic_segment .
+
+        ?b_genomic_segment a brso:GenomicSegment ;
+            dcterms:identifier ?gene_id ;
+            skos:altLabel ?synonym .
+
+        OPTIONAL{
+            ?b_genomic_segment rdfs:label ?gene_name.
+        }
+    }
+
+    # 形質特徴
+    OPTIONAL{
+        ?StageResource sio:SIO_001279 ?b_phenotype_feature .
+        ?b_phenotype_feature a sio:SIO_010056 ;
+            rdfs:label ?phenotype_feature .
+        filter(LANG(?phenotype_feature) = '')
+
+        OPTIONAL{
+            ?b_phenotype_feature dcterms:reference ?b_phenotype_reference .
+            ?b_phenotype_reference a bibo:Article ;
+                prism:publicationName ?phenotype_puclication_name .
+
+            OPTIONAL{
+                ?b_phenotype_reference dc:creater ?b_phenotype_author.
+                ?b_phenotype_author a foaf:Person ;
+                    foaf:name ?phenotype_author_name .
+            }
+        }
+    }
+    
+    # 人工飼料摂食性、幼虫期間
+    OPTIONAL{
+        ?StageResource sio:SIO_001279 ?b_phenotype_else .
+        
+        ?b_phenotype_else a sio:SIO_010056 ;
+            rdfs:label ?phenotype_else .
+        filter(LANG(?phenotype_else) = 'en' || LANG(?phenotype_else) = 'ja')
+        
+        ?b_phenotype_else dcterms:description ?phenotype_description.
+    }
+
+    # 検索項目
+    {
+        { 
+            ?Resource rdfs:label ?strain .  
+            ?strain bif:contains '"{{keyword}}"' . 
+        } UNION { 
+            ?Resource dcterms:description ?description .  
+            ?description bif:contains '"{{keyword}}"' . 
+        } UNION { 
+            ?Resource brso:derived_from ?origin .
+            ?origin bif:contains '"{{keyword}}"' . 
+        } UNION { 
+            ?b_reference prism:publicationName ?puclication_name .
+            ?puclication_name bif:contains '"{{keyword}}"' . 
+        } UNION { 
+            ?author foaf:name ?author_name .
+            ?author_name bif:contains '"{{keyword}}"' . 
+        } UNION { 
+            ?b_resource_state rdfs:label ?resource_state .
+            ?resource_state bif:contains '"{{keyword}}"' . 
+        } UNION { 
+            ?b_genomic_segment dcterms:identifier ?gene_id .
+            ?gene_id bif:contains '"{{keyword}}"' . 
+        } UNION {
+            ?b_genomic_segment skos:altLabel ?synonym .
+            ?synonym bif:contains '"{{keyword}}"' .
+        } UNION {
+            ?b_genomic_segment rdfs:label ?gene_name.
+            ?gene_name bif:contains '"{{keyword}}"' .
+        } UNION {
+            ?b_phenotype rdfs:label ?phenotype_feature .
+            ?phenotype_feature bif:contains '"{{keyword}}"' .
+        } UNION {
+            ?b_phenotype_reference prism:publicationName ?phenotype_puclication_name .
+            ?phenotype_puclication_name bif:contains '"{{keyword}}"' .
+        } UNION {
+            ?b_phenotype_else rdfs:label ?phenotype_else .
+            ?phenotype_else bif:contains '"{{keyword}}"' 
+        } UNION {
+            ?b_phenotype_else dcterms:description ?phenotype_description.
+            ?phenotype_description bif:contains '"{{keyword}}"' .
+        }
+    }
+}
+ORDER BY ?id

@@ -1,0 +1,14 @@
+{
+  "name": "silkworm_global_search.stanza",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": "https://github.com/holshigen/silkworm_global_search.stanza",
+  "dependencies": {
+    "@vueform/slider": "^2.0.5",
+    "togostanza": "github:togostanza/togostanza"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "private": true
+}
