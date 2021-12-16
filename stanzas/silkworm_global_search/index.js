@@ -12,7 +12,7 @@ export default class SilkwormPhenotypeSearch extends Stanza {
     async render() {
         try {
             let data1 = await this.query({
-                endpoint : "http://133.39.75.125:8890/sparql/",
+                endpoint : "https://rcshige3.nig.ac.jp/rdf/sparql/",
                 template : "stanza1.rq",
             });
             let result1 = unwrapValueFromBinding(data1);
@@ -25,7 +25,7 @@ export default class SilkwormPhenotypeSearch extends Stanza {
             }
 
             let data2 = await this.query({
-                endpoint : "http://133.39.75.125:8890/sparql/",
+                endpoint : "https://rcshige3.nig.ac.jp/rdf/sparql/",
                 template : rq,
                 parameters : this.params,
             });
