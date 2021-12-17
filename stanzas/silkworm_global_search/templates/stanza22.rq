@@ -12,7 +12,7 @@ PREFIX bmpo: <http://purl.bioontology.org/ontology/BMPO/>
 
 SELECT DISTINCT
     ?id
-    (group_concat(distinct ?phenotype_feature;separator = ", ") AS ?phenotype_feature)
+    (group_concat(distinct ?phenotype;separator = ", ") AS ?phenotype)
     (group_concat(distinct ?journal ;separator = ",") AS ?journal)
     (group_concat(distinct ?origin;separator = ", ") AS ?origin)
 FROM <http://iruddat2.nig.ac.jp:8120/silkworm>
@@ -70,8 +70,8 @@ WHERE {
     OPTIONAL{
         ?StageResource sio:SIO_001279 ?b_phenotype_feature .
         ?b_phenotype_feature a sio:SIO_010056 ;
-            rdfs:label ?phenotype_feature .
-        filter(LANG(?phenotype_feature) = '')
+            rdfs:label ?phenotype .
+        filter(LANG(?phenotype) = '')
 
         OPTIONAL{
             ?b_phenotype_feature dcterms:reference ?b_phenotype_reference .
@@ -127,8 +127,8 @@ WHERE {
             ?b_genomic_segment rdfs:label ?gene_name.
             ?gene_name bif:contains '"{{keyword}}"' .
         } UNION {
-            ?b_phenotype rdfs:label ?phenotype_feature .
-            ?phenotype_feature bif:contains '"{{keyword}}"' .
+            ?b_phenotype rdfs:label ?phenotype .
+            ?phenotype bif:contains '"{{keyword}}"' .
         } UNION {
             ?b_phenotype_reference prism:publicationName ?phenotype_puclication_name .
             ?phenotype_puclication_name bif:contains '"{{keyword}}"' .
