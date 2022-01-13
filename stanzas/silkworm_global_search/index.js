@@ -55,14 +55,14 @@ export default class SilkwormPhenotypeSearch extends Stanza {
             $(this.root.querySelector('#resultTable')).dataTable({
                 // "aLengthMenu" : [ 10, 25, 50, 100 ], // 表示件数の選択肢
                 // "iDisplayLength" : 10, // 表示件数のデフォルトの値
-                "ordering" : true, // ソート
-                "searching" : false, // 検索
-                "oLanguage" : { // 表示される文字
+                "ordering" : true,			// ソート
+                "searching" : false,		// 検索
+                "oLanguage" : {				// 表示される文字
                   "sEmptyTable" : "No data found.",
                   "sZeroRecords" : "No data found.",
                 },
-                "info": true,
-                "dom": '<"top"<"pagination"p>><"information"i><"length_changing"l>rt<"bottom"<"pagination"p>><"clear">',
+                "info": true,				// 件数
+                "dom": '<"top"<"information"i><"pagination"p><"length_changing"l>>rt<"bottom"<"pagination"p>><"clear">',	// 表示項目位置
             });
 
             // URI表示チェックボックス
