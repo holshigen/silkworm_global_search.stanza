@@ -15,54 +15,58 @@ WHERE {
     {
         ?Resource a brso:BiologicalResource ;
             dcterms:identifier ?id ;
-            bmpo:stage_egg ?StageResource .
-        ?StageResource a brso:BiologicalResourceEgg ;
-            sio:SIO_001279 _:b1 .
-        filter(LANG(?phenotype) = '')
+            bmpo:stage_egg ?StageEgg .
+        ?StageEgg a brso:BiologicalResourceEgg .
+        
         OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
         OPTIONAL {?Resource brso:derived_from ?origin .}
         OPTIONAL {
+            ?StageEgg sio:SIO_001279 _:b1 .
             _:b1 a sio:SIO_010056 ;
                 rdfs:label ?phenotype .
+            filter(LANG(?phenotype) = '')
         }
     } UNION {
         ?Resource a brso:BiologicalResource ;
             dcterms:identifier ?id ;
-            bmpo:stage_larva ?StageResource .
-        ?StageResource a brso:BiologicalResourceLarva ;
-            sio:SIO_001279 _:b2 .
-        filter(LANG(?phenotype) = '')
+            bmpo:stage_larva ?StageLarva .
+        ?StageLarva a brso:BiologicalResourceLarva .
+
         OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
         OPTIONAL {?Resource brso:derived_from ?origin .}
         OPTIONAL {
+            ?StageLarva sio:SIO_001279 _:b2 .
             _:b2 a sio:SIO_010056 ;
                 rdfs:label ?phenotype .
+            filter(LANG(?phenotype) = '')
         }
     } UNION {
         ?Resource a brso:BiologicalResource ;
             dcterms:identifier ?id ;
-            bmpo:stage_pupa ?StageResource .
-        ?StageResource a brso:BiologicalResourcePupa ;
-            sio:SIO_001279 _:b3 .
-        filter(LANG(?phenotype) = '')
+            bmpo:stage_pupa ?StagePupa .
+        ?StagePupa a brso:BiologicalResourcePupa .
+
         OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
-        OPTIONAL {?Resource brso:derived_from ?origin .}
+        OPTIONAL {?Resource brso:derived_from ?origin .}  
         OPTIONAL {
+            ?StagePupa sio:SIO_001279 _:b3 .
             _:b3 a sio:SIO_010056 ;
                 rdfs:label ?phenotype .
+            filter(LANG(?phenotype) = '')
         }
     } UNION {
         ?Resource a brso:BiologicalResource ;
             dcterms:identifier ?id ;
-            bmpo:stage_adult ?StageResource .
-        ?StageResource a brso:BiologicalResourceAdult ;
-            sio:SIO_001279 _:b4 .
-        filter(LANG(?phenotype) = '')
+            bmpo:stage_adult ?StageAdult .
+        ?StageAdult a brso:BiologicalResourceAdult .
+
         OPTIONAL {?Resource dcterms:isReferencedBy ?journal .}
-        OPTIONAL {?Resource brso:derived_from ?origin .}
+        OPTIONAL {?Resource brso:derived_from ?origin .}  
         OPTIONAL {
+            ?StageAdult sio:SIO_001279 _:b4 .
             _:b4 a sio:SIO_010056 ;
                 rdfs:label ?phenotype .
+            filter(LANG(?phenotype) = '')
         }
     }
 }
