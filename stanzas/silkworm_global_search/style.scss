@@ -23,6 +23,24 @@ table.dataTable {
   width: 99%;
 }
 
+.dataTables_wrapper .dataTables_paginate {
+  float: none !important;
+  text-align: center !important;
+}
+
 .form-check-input {
   margin-top: 0;
+}
+
+.pagination {
+  text-align: center ;
+  display: unset;
+}
+
+.information {
+  float: left;
+}
+
+.length_changing {
+  float: right;
 }
