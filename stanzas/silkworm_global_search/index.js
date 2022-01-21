@@ -92,6 +92,12 @@ export default class SilkwormPhenotypeSearch extends Stanza {
 			$(this.root.querySelector("#loading")).remove();
 
 		} catch (e) {
+
+			// エラー画面表示
+			this.renderTemplate({
+				template: 'error.html.hbs'
+			});
+
 			console.log(e);
 		}
 	}
