@@ -14,7 +14,7 @@ SELECT DISTINCT
     ?id
     (group_concat(distinct ?phenotype;separator = ", ") AS ?phenotype)
     (group_concat(distinct ?journal ;separator = ",") AS ?journal)
-    (group_concat(distinct ?origin;separator = ", ") AS ?origin)
+    (group_concat(distinct ?origin_all;separator = ", ") AS ?origin_all)
 FROM <http://iruddat2.nig.ac.jp:8120/silkworm_v4_0_0>
 WHERE {
 
@@ -24,8 +24,18 @@ WHERE {
         rdfs:label ?strain ;
         dcterms:description ?description ;
         ?stage ?StageResource .
+    
+    # ステージ別リソース情報
+    ?StageResource a ?StageResourceClass . 
+    filter(?StageResourceClass = brso:BiologicalResourceEgg 
+        || ?StageResourceClass = brso:BiologicalResourceLarva
+        || ?StageResourceClass = brso:BiologicalResourcePupa
+        || ?StageResourceClass = brso:BiologicalResourceAdult)
 
-    OPTIONAL { ?Resource brso:derived_from ?origin . }
+    ?StageResource brso:resource_state ?b_resource_state .
+    ?b_resource_state a brso:ResourceState;
+        rdfs:label ?resource_state .
+    
     OPTIONAL { ?Resource dcterms:isReferencedBy ?journal . }
     OPTIONAL {
         ?Resource dcterms:reference ?b_reference .
@@ -39,16 +49,12 @@ WHERE {
                 foaf:name ?author_name .
         }
     }
-    
-    # ステージ別リソース情報
-    ?StageResource a ?StageResourceClass . 
-    filter(?StageResourceClass = brso:BiologicalResourceEgg 
-        || ?StageResourceClass = brso:BiologicalResourceLarva
-        || ?StageResourceClass = brso:BiologicalResourcePupa
-        || ?StageResourceClass = brso:BiologicalResourceAdult)
 
-    ?StageResource brso:resource_state ?b_resource_state .
-    ?b_resource_state rdfs:label ?resource_state .
+    # 起源
+    OPTIONAL {
+        ?Resource brso:derived_from ?origin_all ; #（結果出力用）
+            brso:derived_from ?origin .           #（検索用）
+    }
 
     # 遺伝子情報
     OPTIONAL{
@@ -65,7 +71,7 @@ WHERE {
             ?b_genomic_segment rdfs:label ?gene_name.
         }
     }
-
+    
     # 形質特徴（結果出力用）
     OPTIONAL{
         ?StageResource sio:SIO_001279 ?b_phenotype_feature .
@@ -93,28 +99,28 @@ WHERE {
             }
         }
     }
-
+    
     # 検索項目
     {
         { 
             ?Resource rdfs:label ?strain .  
             ?strain bif:contains '"{{keyword}}"' . 
-        } UNION { 
+        } UNION {
             ?Resource dcterms:description ?description .  
             ?description bif:contains '"{{keyword}}"' . 
-        } UNION { 
+        } UNION {
             ?Resource brso:derived_from ?origin .
             ?origin bif:contains '"{{keyword}}"' . 
-        } UNION { 
+        } UNION {
             ?b_reference prism:publicationName ?puclication_name .
             ?puclication_name bif:contains '"{{keyword}}"' . 
-        } UNION { 
+        } UNION {
             ?author foaf:name ?author_name .
             ?author_name bif:contains '"{{keyword}}"' . 
-        } UNION { 
+        } UNION {
             ?b_resource_state rdfs:label ?resource_state .
             ?resource_state bif:contains '"{{keyword}}"' . 
-        } UNION { 
+        } UNION {
             ?b_genomic_segment dcterms:identifier ?gene_id .
             ?gene_id bif:contains '"{{keyword}}"' . 
         } UNION {
