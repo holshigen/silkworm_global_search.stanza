@@ -14130,6 +14130,12 @@ class SilkwormPhenotypeSearch extends Stanza {
 			$(this.root.querySelector("#loading")).remove();
 
 		} catch (e) {
+
+			// エラー画面表示
+			this.renderTemplate({
+				template: 'error.html.hbs'
+			});
+
 			console.log(e);
 		}
 	}
@@ -14193,7 +14199,10 @@ var metadata = {
 };
 
 var templates = [
-  ["stanza.html.hbs", {"1":function(container,depth0,helpers,partials,data,blockParams) {
+  ["error.html.hbs", {"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"errorMsg\">\nNot found.\n</div>\n\n";
+},"useData":true}],
+["stanza.html.hbs", {"1":function(container,depth0,helpers,partials,data,blockParams) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
