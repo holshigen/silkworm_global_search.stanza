@@ -14275,7 +14275,16 @@ var templates = [
     + "        </tbody>\n    </table>\n</div>\n\n";
 },"useData":true,"useBlockParams":true}],
 ["stanza1.rq", {"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "PREFIX brso: <http://purl.jp/bio/10/brso/>\nPREFIX sio: <http://semanticscience.org/resource/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX so: <http://purl.obolibrary.org/obo/so#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX faldo: <http://biohackathon.org/resource/faldo#>\nPREFIX dct: <http://purl.org/dc/terms/>\nPREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>\nPREFIX org: <http://www.w3.org/ns/org#>\n\nSELECT\n    dct:identifier as ?uri_identifier\n    rdfs:label as ?uri_label\n    dct:isReferencedBy as ?uri_isReferencedBy\n    brso:derived_from as ?uri_derived_from\nFROM <http://iruddat2.nig.ac.jp:8120/silkworm_v4_0_0>\nWHERE {\n}\nlimit 1\n";
+    var stack1, helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
+        if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
+          return parent[propertyName];
+        }
+        return undefined
+    };
+
+  return "PREFIX brso: <http://purl.jp/bio/10/brso/>\nPREFIX sio: <http://semanticscience.org/resource/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX so: <http://purl.obolibrary.org/obo/so#>\nPREFIX skos: <http://www.w3.org/2004/02/skos/core#>\nPREFIX faldo: <http://biohackathon.org/resource/faldo#>\nPREFIX dct: <http://purl.org/dc/terms/>\nPREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>\nPREFIX org: <http://www.w3.org/ns/org#>\n\nSELECT\n    dct:identifier as ?uri_identifier\n    rdfs:label as ?uri_label\n    dct:isReferencedBy as ?uri_isReferencedBy\n    brso:derived_from as ?uri_derived_from\nFROM <"
+    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"graph") || (depth0 != null ? lookupProperty(depth0,"graph") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"graph","hash":{},"data":data,"loc":{"start":{"line":17,"column":6},"end":{"line":17,"column":15}}}) : helper))) != null ? stack1 : "")
+    + ">\nWHERE {\n}\nlimit 1\n";
 },"useData":true}],
 ["stanza21.rq", {"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, lookupProperty = container.lookupProperty || function(parent, propertyName) {
