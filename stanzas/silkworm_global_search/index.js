@@ -8,7 +8,7 @@ import { unwrapValueFromBinding } from 'togostanza/utils';
 import * as dataTables from 'https://rcshige3.nig.ac.jp/rdf/js/jquery.dataTables.min.js';
 import config from '@/config/config.js';
 
-const environment = 'development';
+const environment = 'release';
 
 export default class SilkwormPhenotypeSearch extends Stanza {
 	async render() {
