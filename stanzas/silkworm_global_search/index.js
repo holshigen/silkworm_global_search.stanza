@@ -69,10 +69,10 @@ export default class SilkwormPhenotypeSearch extends Stanza {
 			this.renderTemplate({
 				template: 'stanza.html.hbs',
 				parameters: {
-					uri_identifier: result1[0].uri_identifier,
-					uri_label: result1[0].uri_label,
-					uri_isReferencedBy: result1[0].uri_isReferencedBy,
-					uri_derived_from: result1[0].uri_derived_from,
+					uri_identifier		: result1[0].uri_identifier,
+					uri_label			: result1[0].uri_label,
+					uri_isReferencedBy	: result1[0].uri_isReferencedBy,
+					uri_derived_from	: result1[0].uri_derived_from,
 					silkworm_phenotype_search: result2,
 				}
 			});

@@ -11,6 +11,7 @@ PREFIX prism: <http://prismstandard.org/namespaces/basic/2.0/>
 PREFIX bmpo: <http://purl.bioontology.org/ontology/BMPO/>
 
 SELECT DISTINCT
+    ?Resource
     ?id
     (group_concat(distinct ?phenotype;separator = ", ") AS ?phenotype)
     (group_concat(distinct ?journal ;separator = ",") AS ?journal)
