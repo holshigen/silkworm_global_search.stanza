@@ -4,13 +4,28 @@ import { unwrapValueFromBinding } from 'togostanza/utils';
  * jQueryはウェブアプリケーション側のPrimefacesと衝突するため通常はコメントアウトしておく。
  * Stanza単体で動作させる場合はコメントを外す。
  */
-//import * as jquery from 'https://rcshige3.nig.ac.jp/rdf/js/jquery-3.5.1.min.js';
+import * as jquery from 'https://rcshige3.nig.ac.jp/rdf/js/jquery-3.5.1.min.js';
 import * as dataTables from 'https://rcshige3.nig.ac.jp/rdf/js/jquery.dataTables.min.js';
+import config from '@/config/config.js';
 
+const environment = 'development';
 
 export default class SilkwormPhenotypeSearch extends Stanza {
 	async render() {
 		try {
+
+			let endpoint = '';
+			let graph = '';
+
+			if (environment == 'development'){
+				endpoint = config.DEVELOP_ENDPOINT;
+				graph = config.DEVELOP_GRAPH;
+			} else if(environment == 'release'){
+				endpoint = config.RELEASE_ENDPOINT;
+				graph = config.RELEASE_GRAPH;
+			} else {
+				// 何もしない
+			}
 
 			// ローディング中くるくる表示
 			var dispMsg = "<div class='loadingMsg'>Now loading</div>";
@@ -19,7 +34,8 @@ export default class SilkwormPhenotypeSearch extends Stanza {
 			}
 
 			let data1 = await this.query({
-				endpoint : "https://rcshige3.nig.ac.jp/rdf/sparql/",
+				endpoint : endpoint,
+				graph	: `${graph}`,
 				template : "stanza1.rq",
 			});
 			let result1 = unwrapValueFromBinding(data1);
@@ -32,9 +48,12 @@ export default class SilkwormPhenotypeSearch extends Stanza {
 			}
 
 			let data2 = await this.query({
-				endpoint : "https://rcshige3.nig.ac.jp/rdf/sparql/",
+				endpoint : endpoint,
 				template : rq,
-				parameters : this.params,
+				parameters: {
+					graph	: `${graph}`,
+					keyword	: `${this.params['keyword']}`
+				}
 			});
 			let result2 = unwrapValueFromBinding(data2);
 
