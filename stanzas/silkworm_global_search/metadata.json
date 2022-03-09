@@ -18,7 +18,7 @@
     {
       "stanza:key": "keyword",
       "stanza:type": "string",
-      "stanza:example": "",
+      "stanza:example": "abnormal",
       "stanza:description": "",
       "stanza:required": false
     }
