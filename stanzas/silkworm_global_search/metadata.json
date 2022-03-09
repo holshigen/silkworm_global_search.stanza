@@ -18,7 +18,7 @@
     {
       "stanza:key": "keyword",
       "stanza:type": "string",
-      "stanza:example": "http://purl.bioontology.org/ontology/BMPO/AbnormalAdult",
+      "stanza:example": "adult",
       "stanza:description": "",
       "stanza:required": false
     }
